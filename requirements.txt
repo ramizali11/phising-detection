@@ -1,0 +1,16 @@
+# PhishGuard — requirements.txt
+#
+# This project has NO Python dependencies and requires NO pip installation.
+#
+# PhishGuard is a pure client-side web application built with:
+#   - HTML5
+#   - CSS3
+#   - Vanilla JavaScript (ES6+)
+#   - Browser localStorage API
+#
+# To run the application:
+#   1. Open index.html directly in any modern web browser (Chrome, Firefox, Edge, Safari).
+#   2. No server, no build step, no package manager, and no installation are required.
+#
+# No frameworks, no libraries, no CDN dependencies, and no backend are used.
+# All analysis runs locally in the browser.

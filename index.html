@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PhishGuard — URL Risk Analyzer</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============================================================
+       HEADER / BRANDING
+  ============================================================ -->
+  <header class="site-header">
+    <div class="header-inner">
+      <div class="logo">
+        <span class="logo-icon" aria-hidden="true">🛡</span>
+        <span class="logo-text">PhishGuard</span>
+      </div>
+      <p class="header-tagline">Heuristic URL Risk Analyzer &mdash; Cybersecurity Bootcamp Project</p>
+    </div>
+  </header>
+
+  <!-- ============================================================
+       MAIN LAYOUT
+  ============================================================ -->
+  <main class="dashboard">
+
+    <!-- ── LEFT / PRIMARY COLUMN ──────────────────────────────── -->
+    <section class="panel panel-analyzer" aria-labelledby="analyzer-heading">
+      <h2 id="analyzer-heading" class="panel-title">Analyze a URL</h2>
+
+      <!-- Input form -->
+      <form id="analyze-form" novalidate>
+        <label for="url-input" class="input-label">Enter or paste a URL to inspect:</label>
+        <div class="input-row">
+          <input
+            type="text"
+            id="url-input"
+            class="url-input"
+            placeholder="https://example.com/path?query=value"
+            autocomplete="off"
+            spellcheck="false"
+            aria-describedby="input-hint"
+          />
+          <button type="submit" id="analyze-btn" class="btn btn-primary">Analyze</button>
+        </div>
+        <p id="input-hint" class="input-hint">
+          The URL is analyzed locally in your browser. It is never fetched or opened.
+        </p>
+        <!-- Validation error message (hidden until needed) -->
+        <p id="input-error" class="input-error" role="alert" aria-live="polite" hidden></p>
+      </form>
+
+      <!-- ── RESULTS AREA (hidden until first analysis) ──────── -->
+      <div id="results-area" class="results-area" hidden aria-live="polite">
+
+        <!-- ══ WARNING PANEL — most prominent element ══════════ -->
+        <!-- Role="alert" announces to screen readers immediately -->
+        <div id="warning-panel" class="warning-panel" role="alert" aria-live="assertive">
+          <div class="warning-panel-icon" aria-hidden="true" id="warning-icon">✔</div>
+          <div class="warning-panel-body">
+            <p class="warning-panel-level" id="warning-level">Clean</p>
+            <p class="warning-panel-message" id="warning-message"></p>
+            <p class="warning-panel-recommendation" id="warning-recommendation"></p>
+          </div>
+        </div>
+
+        <!-- Analyzed URL display -->
+        <div class="analyzed-url-row">
+          <span class="label">Analyzed URL:</span>
+          <code id="analyzed-url-display" class="analyzed-url-display"></code>
+          <span id="scheme-note" class="scheme-note" hidden></span>
+        </div>
+
+        <!-- Score card: numeric score + bar -->
+        <div class="score-card" id="score-card">
+          <div class="score-number-wrap">
+            <span id="score-number" class="score-number clean">0</span>
+            <span class="score-max">/100</span>
+          </div>
+          <div class="score-card-right">
+            <span id="risk-badge" class="risk-badge clean">Clean</span>
+            <p class="score-sub">Heuristic Risk Score</p>
+            <div class="score-bar" role="progressbar"
+                 aria-label="Risk score bar"
+                 aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+              <div id="score-bar-fill" class="score-bar-fill clean"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Disclaimer: always visible, below the score card -->
+        <p class="disclaimer-inline">
+          ⚠ Results are <strong>heuristic estimates only</strong>. A low score does not
+          guarantee safety; a high score does not prove a URL is malicious.
+        </p>
+
+        <!-- Findings list -->
+        <div class="findings-section">
+          <h3 class="findings-heading">Warning Signs Detected</h3>
+          <ul id="findings-list" class="findings-list" aria-label="Warning signs detected"></ul>
+          <p id="no-findings-msg" class="no-findings-msg" hidden>
+            ✔ No suspicious indicators detected for this URL.
+          </p>
+        </div>
+
+        <!-- Recommended precautions -->
+        <div class="precautions-section">
+          <h3 class="precautions-heading">Recommended Precautions</h3>
+          <ul id="precautions-list" class="precautions-list" aria-label="Recommended precautions"></ul>
+        </div>
+
+      </div><!-- /#results-area -->
+    </section>
+
+    <!-- ── RIGHT / HISTORY COLUMN ──────────────────────────────── -->
+    <aside class="panel panel-history" aria-labelledby="history-heading">
+      <div class="history-header">
+        <h2 id="history-heading" class="panel-title">Scan History</h2>
+        <button id="clear-history-btn" class="btn btn-ghost btn-sm" aria-label="Clear all scan history">
+          Clear All
+        </button>
+      </div>
+
+      <ul id="history-list" class="history-list" aria-label="Recent scans" aria-live="polite">
+        <!-- Populated by JavaScript -->
+      </ul>
+
+      <!-- Shown when history is empty -->
+      <p id="history-empty-msg" class="history-empty-msg">
+        No scans yet. Analyze a URL to begin.
+      </p>
+
+      <!-- Shown when localStorage is unavailable -->
+      <p id="history-unavailable-msg" class="history-unavailable-msg" hidden>
+        ℹ History is unavailable (storage access blocked or full).
+      </p>
+    </aside>
+
+  </main><!-- /.dashboard -->
+
+  <!-- ============================================================
+       FOOTER
+  ============================================================ -->
+  <footer class="site-footer">
+    <p>
+      PhishGuard &mdash; GTU Cybersecurity Bootcamp Project &mdash;
+      <strong>For educational purposes only.</strong> Not a substitute for professional security tools.
+    </p>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
